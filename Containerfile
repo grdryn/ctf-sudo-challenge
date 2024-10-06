@@ -19,7 +19,12 @@ USER ${username}
 RUN echo "${USER_PASSWORD}" | sudo -S echo "Shh, be quiet!"
 USER root
 
-COPY copy-files/ /
-# Copy separately to avoid mucking up ownership/permissions in /home
+COPY agent-collect-logs.sh /usr/local/bin
 COPY AGENT_README.md /home/${username}
+COPY entrypoint.sh /usr/local/sbin
+COPY flag.txt /
+
+RUN chmod 600 /flag.txt && \
+    chmod 700 /usr/local/sbin/entrypoint.sh
+
 ENTRYPOINT entrypoint.sh
