@@ -36,11 +36,6 @@ Once it's all done, connect to containerssh to spawn the pod, use any password:
 
     ssh agent@agent.ctf.raiders-of-the-lost-flag.quest -p 2222
 
-> For some reason, there is an issue with the SSH client in fedora: it won't
-> proceed to the authentication phase. **This is problematic all will need to
-> be explained carefully to players.**
-> I opened a ticket for it: https://github.com/ContainerSSH/ContainerSSH/issues/614
-
 ## Solution
 
 See `example-solve.txt`
