@@ -26,15 +26,15 @@ Change it in `flag.txt`:
 
 Deployment is going to be a bit awkward:
 
-1. We need to have containerssh installed and configured for port 2000/tcp (see [installing containerssh](https://gitlab.cee.redhat.com/warhw-ctf-2023-orga-team/warhw-ctf-2024/-/blob/main/infrastructure/k3s/README.md?ref_type=heads#optional-install-containerssh)
+1. We need to have containerssh installed and configured for port 2222/tcp (see [installing containerssh](https://gitlab.cee.redhat.com/warhw-ctf-2023-orga-team/warhw-ctf-2024/-/blob/main/infrastructure/k3s/README.md?ref_type=heads#optional-install-containerssh)
 2. Configure containerssh instance to have the entrypoint running:
    `oc apply -f ./deploy.yaml`
 3. Kill the containerssh pod in ns/containerssh, otherwise the configuration
    won't be reloaded.
 
-Once it's all done, connect to containerssh to spawn the pod:
+Once it's all done, connect to containerssh to spawn the pod, use any password:
 
-    ssh agent@agent.ctf.raiders-of-the-lost-flag.quest -p 2000
+    ssh agent@agent.ctf.raiders-of-the-lost-flag.quest -p 2222
 
 > For some reason, there is an issue with the SSH client in fedora: it won't
 > proceed to the authentication phase. **This is problematic all will need to
