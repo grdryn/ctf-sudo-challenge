@@ -1,0 +1,52 @@
+# ContainerSSH must be already installed
+#---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: containerssh-config
+  namespace: containerssh
+data:
+  config.yaml: |
+    # Let's log on the debug level so we can see what's going on.
+    log:
+      level: debug
+    ssh:
+      hostkeys:
+        # This points to the host key we will create in the next step.
+        - /etc/containerssh/host.key
+    auth:
+      password:
+        method: webhook
+        webhook:
+          url: "http://127.0.0.1:8080"
+
+    # We run the guest containers in the same Kubernetes cluster as ContainerSSH is running in
+    backend: kubernetes
+    kubernetes:
+      connection:
+        host: kubernetes.default.svc
+        cacertFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      pod:
+        shellCommand: ["/entrypoint.sh"]
+        mode: connection
+        metadata:
+          namespace: containerssh-guests
+        spec:
+          automountServiceAccountToken: false
+          containers:
+            - name: shell
+              #image: containerssh/containerssh-guest-image
+              #image: quay.io/containerssh/containerssh-guest-image:latest
+              image: quay.io/rh_ctf_2023/rh_ctf:sudo_gerard
+              imagePullPolicy: Always
+              workingDir: /home/agent
+              # Further options to lock down the execution.
+              # See https://containerssh.io/reference/kubernetes/ for mre options
+              #securityContext:
+              #   runAsNonRoot: true
+              #   runAsUser: 1001
+              resources:
+                limits:
+                  memory: "128Mi"
+                  cpu: "500m"
