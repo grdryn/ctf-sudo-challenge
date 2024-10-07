@@ -32,7 +32,9 @@ Deployment is going to be a bit awkward:
 3. Kill the containerssh pod in ns/containerssh, otherwise the configuration
    won't be reloaded.
 
-Once it's all done, connect to containerssh
+Once it's all done, connect to containerssh to spawn the pod:
+
+    ssh agent@agent.ctf.raiders-of-the-lost-flag.quest -p 2000
 
 > For some reason, there is an issue with the SSH client in fedora: it won't
 > proceed to the authentication phase. **This is problematic all will need to
