@@ -7,7 +7,7 @@ COPY --from=agent /usr/bin/containerssh-agent /usr/bin/containerssh-agent
 
 ARG username=agent
 ARG user_password=rh_ctf_sud0_ch@ll3ng3
-RUN dnf install -y sudo
+RUN dnf install -y sudo shadow-utils
 
 # Create regular user and add to sudoers file
 RUN export salted_pass=$(perl -e "print crypt(\"${user_password}\", 'pepper');") && \
